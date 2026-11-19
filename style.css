@@ -40,28 +40,70 @@ body {
 .search-section {
   margin: 30px 0;
   display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.search-wrapper {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px 44px 16px 16px;
+  font-size: 16px;
+  border: 2px solid #ff003b;
+  border-radius: 8px;
+  background-color: white;
+  font-weight: 400;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #e3a535;
+  box-shadow: 0 0 0 3px rgba(227, 165, 53, 0.1);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff003b;
+  pointer-events: none;
+  font-size: 16px;
 }
 
 .search-section select {
-  width: 100%;
+  flex: 1;
+  min-width: 200px;
   padding: 16px;
-  font-size: 18px;
-  border: 2px solid #000;
+  font-size: 16px;
+  border: 2px solid #ff003b;
   border-radius: 8px;
   cursor: pointer;
   background-color: white;
   font-weight: 500;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .search-section select:focus {
   outline: none;
-  border-color: #666;
+  border-color: #e3a535;
+  box-shadow: 0 0 0 3px rgba(227, 165, 53, 0.1);
 }
 
 /* chat section */
 .chatbox {
   margin: 40px 0;
-  border: 2px solid #000;
+  border: 2px solid #ff003b;
   border-radius: 8px;
   padding: 26px;
 }
@@ -73,12 +115,61 @@ body {
 
 .chat-window {
   padding: 20px;
-  font-size: 18px;
-  line-height: 1.5;
-  height: 250px;
+  font-size: 16px;
+  line-height: 1.6;
+  height: 400px;
   overflow-y: auto;
-  background: #fafafa;
+  background: #fff8f5;
   margin-bottom: 20px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Chat message styles */
+.message {
+  display: flex;
+  margin-bottom: 10px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.assistant {
+  justify-content: flex-start;
+}
+
+.message-content {
+  max-width: 75%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  word-wrap: break-word;
+}
+
+.message.user .message-content {
+  background: #ff003b;
+  color: white;
+  border-bottom-right-radius: 2px;
+}
+
+.message.assistant .message-content {
+  background: #f0f0f0;
+  color: #333;
+  border-bottom-left-radius: 2px;
 }
 
 /* placeholder message */
@@ -86,8 +177,9 @@ body {
   width: 100%;
   text-align: center;
   padding: 40px;
-  color: #666;
-  font-size: 18px;
+  color: #999;
+  font-size: 16px;
+  font-style: italic;
 }
 
 /* input row */
@@ -108,12 +200,12 @@ body {
 
 .chat-form input:focus {
   outline: none;
-  border-bottom-color: #000;
+  border-bottom-color: #ff003b;
 }
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: #ff003b;
   color: #fff;
   border: none;
   padding: 12px;
@@ -127,11 +219,11 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: #e3a535;
 }
 
 .chat-form button:focus {
-  outline: 2px solid #000;
+  outline: 2px solid #ff003b;
   outline-offset: 2px;
 }
 
@@ -162,12 +254,12 @@ body {
 
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: #ff003b;
   text-decoration: none;
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: #e3a535;
 }
 
 /* products grid */
@@ -186,6 +278,19 @@ body {
   display: flex;
   gap: 15px;
   min-height: 160px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.product-card.selected {
+  border: 3px solid #ff003b;
+  background-color: #fff8f5;
 }
 
 .product-card img {
@@ -213,11 +318,36 @@ body {
   color: #666;
 }
 
+.info-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 0, 59, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(255, 0, 59, 0.3);
+}
+
+.info-btn:hover {
+  background: #e3a535;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(227, 165, 53, 0.4);
+}
+
 /* selected products */
 .selected-products {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #000;
+  border: 2px solid #ff003b;
   border-radius: 8px;
 }
 
@@ -230,6 +360,177 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 10px;
+}
+
+.empty-message {
+  color: #999;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.selected-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #fff8f5;
+  border: 1px solid #ff003b;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.selected-item span {
+  flex: 1;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #ff003b;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.remove-btn:hover {
+  color: #e3a535;
+}
+
+.clear-all-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: #666;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 10px;
+}
+
+.clear-all-btn:hover {
+  background: #333;
+}
+
+.clear-all-btn i {
+  margin-right: 6px;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid #ff003b;
+}
+
+.modal-header h2 {
+  font-size: 22px;
+  color: #333;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #ff003b;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-image {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.modal-brand {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.modal-category {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #666;
+  text-transform: capitalize;
+}
+
+.modal-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
 }
 
 .generate-btn {
@@ -237,17 +538,33 @@ body {
   margin-top: 20px;
   padding: 16px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   color: #fff;
-  background: #000;
+  background: linear-gradient(135deg, #ff003b 0%, #d4002d 100%);
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 0, 59, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.generate-btn:hover {
-  background: #666;
+.generate-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #e3a535 0%, #c48e1f 100%);
+  box-shadow: 0 6px 16px rgba(227, 165, 53, 0.4);
+  transform: translateY(-2px);
+}
+
+.generate-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 0, 59, 0.2);
+}
+
+.generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .generate-btn i {
